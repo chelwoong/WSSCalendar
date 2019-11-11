@@ -13,6 +13,7 @@
 		4C883BC62362CA1400BF01CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C883BC52362CA1400BF01CE /* Assets.xcassets */; };
 		4C883BC92362CA1400BF01CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C883BC72362CA1400BF01CE /* LaunchScreen.storyboard */; };
 		4C883BD12362CC3400BF01CE /* UIView+anchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C883BD02362CC3400BF01CE /* UIView+anchor.swift */; };
+		4C883BD32363CB5A00BF01CE /* DayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C883BD22363CB5A00BF01CE /* DayCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		4C883BC82362CA1400BF01CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C883BCA2362CA1400BF01CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C883BD02362CC3400BF01CE /* UIView+anchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+anchor.swift"; sourceTree = "<group>"; };
+		4C883BD22363CB5A00BF01CE /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,48 @@
 		4C883BBB2362CA1200BF01CE /* WSSCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				4C883BD72363CB7A00BF01CE /* Extension */,
+				4C883BD62363CB6F00BF01CE /* Model */,
+				4C883BD52363CB6B00BF01CE /* Controller */,
+				4C883BD42363CB5D00BF01CE /* View */,
 				4C883BBC2362CA1200BF01CE /* AppDelegate.swift */,
 				4C883BBE2362CA1200BF01CE /* SceneDelegate.swift */,
-				4C883BC02362CA1200BF01CE /* ViewController.swift */,
 				4C883BC52362CA1400BF01CE /* Assets.xcassets */,
 				4C883BC72362CA1400BF01CE /* LaunchScreen.storyboard */,
 				4C883BCA2362CA1400BF01CE /* Info.plist */,
-				4C883BD02362CC3400BF01CE /* UIView+anchor.swift */,
 			);
 			path = WSSCalendar;
+			sourceTree = "<group>";
+		};
+		4C883BD42363CB5D00BF01CE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4C883BD22363CB5A00BF01CE /* DayCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4C883BD52363CB6B00BF01CE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4C883BC02362CA1200BF01CE /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4C883BD62363CB6F00BF01CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4C883BD72363CB7A00BF01CE /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				4C883BD02362CC3400BF01CE /* UIView+anchor.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +175,7 @@
 				4C883BC12362CA1200BF01CE /* ViewController.swift in Sources */,
 				4C883BD12362CC3400BF01CE /* UIView+anchor.swift in Sources */,
 				4C883BBD2362CA1200BF01CE /* AppDelegate.swift in Sources */,
+				4C883BD32363CB5A00BF01CE /* DayCollectionViewCell.swift in Sources */,
 				4C883BBF2362CA1200BF01CE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,16 +10,37 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // MARK: - Variables and Properties
     var collectionViewBottomAnchor: NSLayoutConstraint?
     var contentViewTopAnchor: NSLayoutConstraint?
+    
+    let dateCellId = "dateCellId"
 
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .orange
+        self.view.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        self.navigationController?.navigationBar.isHidden = true
+        
+        dayCollectionView.dataSource = self
+        dayCollectionView.delegate = self
+        dayCollectionView.register(DayCollectionViewCell.self, forCellWithReuseIdentifier: dateCellId)
         
         setupViews()
+        setupGesture()
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if let flowLayout = dayCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            dayCollectionView.collectionViewLayout.invalidateLayout()
+            dayCollectionView.collectionViewLayout = flowLayout
+        }
+    }
+    
+    
+    func setupGesture() {
         let upSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gesture:)))
         upSwipeGesture.direction = .up
         
@@ -28,27 +49,39 @@ class ViewController: UIViewController {
         
         self.view.addGestureRecognizer(upSwipeGesture)
         self.view.addGestureRecognizer(downSwipeGesture)
-        
     }
     
-    
+    // MARK: - Functions
     @objc func handleSwipe(gesture: UISwipeGestureRecognizer) {
         print("swiped")
         
         switch gesture.direction {
         case .up:
             
-            collectionViewBottomAnchor?.constant = -200
-            contentViewTopAnchor?.constant = 0
+//            self.view.layoutIfNeeded()
             
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+            
+            self.dayCollectionView.collectionViewLayout.invalidateLayout()
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: .allowAnimatedContent, animations: {
+                self.collectionViewBottomAnchor?.constant = -200
+                self.contentViewTopAnchor?.constant = 0
                 self.view.layoutIfNeeded()
             }, completion: nil)
+            
+//            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewanima, animations: {
+//                self.dayCollectionView.collectionViewLayout.invalidateLayout()
+//                self.view.layoutIfNeeded()
+//
+//            }, completion: nil)
             
         case .down:
 
             collectionViewBottomAnchor?.constant = 0
             contentViewTopAnchor?.constant = 50
+//            self.dayCollectionView.reloadData()
+            self.dayCollectionView.collectionViewLayout.invalidateLayout()
+            
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
                 self.view.layoutIfNeeded()
             }, completion: nil)
@@ -56,7 +89,6 @@ class ViewController: UIViewController {
             contentView.isHidden = true
         }
         
-//        dayCollectionView.bottomAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     }
     
     func setupViews() {
@@ -66,7 +98,7 @@ class ViewController: UIViewController {
         self.view.addSubview(contentView)
         
         
-        monthView.anchor(top: self.view.safeAreaLayoutGuide.topAnchor, leading: self.view.safeAreaLayoutGuide.leadingAnchor, bottom: nil, trailing: self.view.safeAreaLayoutGuide.trailingAnchor, padding: .zero, size: .init(width: 0, height: 50))
+        monthView.anchor(top: self.view.safeAreaLayoutGuide.topAnchor, leading: self.view.safeAreaLayoutGuide.leadingAnchor, bottom: nil, trailing: self.view.safeAreaLayoutGuide.trailingAnchor, padding: .zero, size: .init(width: 0, height: 72))
         
         weekdaysView.anchor(top: monthView.bottomAnchor, leading: self.view.safeAreaLayoutGuide.leadingAnchor, bottom: nil, trailing: self.view.safeAreaLayoutGuide.trailingAnchor, padding: .zero, size: .init(width: 0, height: 50))
         
@@ -79,23 +111,13 @@ class ViewController: UIViewController {
         self.contentViewTopAnchor = contentView.topAnchor.constraint(equalTo: dayCollectionView.bottomAnchor, constant: 50)
         self.contentViewTopAnchor?.isActive = true
         
-//        contentView.frame = CGRect.init(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: 200)
-//        contentView.topAnchor.constraint(equalTo: dayCollectionView.bottomAnchor, constant: 0).isActive = true
-        
-        
-//        contentView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
-//        contentView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
-//        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200).priority = UILayoutPriority(rawValue: 750)
-        
-        
-        
     }
     
+    // MARK: - Views
     let monthView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         return view
     }()
     
@@ -121,6 +143,7 @@ class ViewController: UIViewController {
         let collectionView = UICollectionView(frame: CGRect.init(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
     
@@ -131,6 +154,47 @@ class ViewController: UIViewController {
         return view
     }()
 
-
 }
 
+// MARK: - UICollectionView DataSource
+extension ViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 7 * 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dateCellId, for: indexPath) as? DayCollectionViewCell else {return UICollectionViewCell()}
+        
+        cell.backgroundColor = .orange
+        cell.dayLabel.text = "\(indexPath.item)"
+        
+        return cell
+    }
+}
+
+// MARK: - UICollectionView Delegate
+extension ViewController: UICollectionViewDelegate {
+    
+}
+
+// MARK: - UICollectionView Delegate FlowLayout
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = self.dayCollectionView.frame.width / 7
+        let height = self.dayCollectionView.frame.height / 6
+        return  .init(width: width, height: height)
+    }
+
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//
+//    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+}
