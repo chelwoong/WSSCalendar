@@ -14,6 +14,7 @@
 		4C883BC92362CA1400BF01CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C883BC72362CA1400BF01CE /* LaunchScreen.storyboard */; };
 		4C883BD12362CC3400BF01CE /* UIView+anchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C883BD02362CC3400BF01CE /* UIView+anchor.swift */; };
 		4C883BD32363CB5A00BF01CE /* DayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C883BD22363CB5A00BF01CE /* DayCollectionViewCell.swift */; };
+		4CE81E32237C5305002B7239 /* WeekdaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE81E31237C5305002B7239 /* WeekdaysView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		4C883BCA2362CA1400BF01CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C883BD02362CC3400BF01CE /* UIView+anchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+anchor.swift"; sourceTree = "<group>"; };
 		4C883BD22363CB5A00BF01CE /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCollectionViewCell.swift; sourceTree = "<group>"; };
+		4CE81E31237C5305002B7239 /* WeekdaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdaysView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				4C883BD22363CB5A00BF01CE /* DayCollectionViewCell.swift */,
+				4CE81E31237C5305002B7239 /* WeekdaysView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C883BC12362CA1200BF01CE /* ViewController.swift in Sources */,
+				4CE81E32237C5305002B7239 /* WeekdaysView.swift in Sources */,
 				4C883BD12362CC3400BF01CE /* UIView+anchor.swift in Sources */,
 				4C883BBD2362CA1200BF01CE /* AppDelegate.swift in Sources */,
 				4C883BD32363CB5A00BF01CE /* DayCollectionViewCell.swift in Sources */,
