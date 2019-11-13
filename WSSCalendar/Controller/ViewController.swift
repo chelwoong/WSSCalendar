@@ -155,21 +155,11 @@ class ViewController: UIViewController {
         return view
     }()
     
-    let weekdaysView: UIStackView = {
-        let dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
-        let weekdaysStackView = UIStackView()
-        weekdaysStackView.translatesAutoresizingMaskIntoConstraints = false
+    let weekdaysView: WeekdaysView = {
+        let view = WeekdaysView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         
-        for day in dayOfWeek {
-            let dayLabel = UILabel()
-            dayLabel.text = day
-            dayLabel.textAlignment = .center
-            weekdaysStackView.addArrangedSubview(dayLabel)
-            weekdaysStackView.distribution = .fillEqually
-            weekdaysStackView.axis = .horizontal
-        }
-        
-        return weekdaysStackView
+        return view
     }()
     
     let dayCollectionView: UICollectionView = {
