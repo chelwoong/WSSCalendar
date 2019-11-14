@@ -14,6 +14,8 @@ class CalendarViewController: UIViewController {
     var collectionViewBottomAnchor: NSLayoutConstraint?
     var contentViewTopAnchorConstraint: NSLayoutConstraint?
     
+    var presentDate = Date()
+    var endWeekOfMonth = 0
     
     let dateCellId = "dateCellId"
 
@@ -24,6 +26,9 @@ class CalendarViewController: UIViewController {
         self.view.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         self.navigationController?.navigationBar.isHidden = true
         
+        endWeekOfMonth = Calendar.current.component(.weekOfMonth, from: self.presentDate.endDateOfMonth)
+        
+        monthView.delegate = self
         dayCollectionView.dataSource = self
         dayCollectionView.delegate = self
         dayCollectionView.register(DayCollectionViewCell.self, forCellWithReuseIdentifier: dateCellId)
@@ -83,20 +88,12 @@ class CalendarViewController: UIViewController {
         }
     }
     
-//    func handlePanChanging(gesutre: UIPanGestureRecognizer) {
-//
-//        if
-//    }
-    
     @objc func handleSwipe(gesture: UISwipeGestureRecognizer) {
         print("swiped")
         
         switch gesture.direction {
         case .up:
-            
-//            self.view.layoutIfNeeded()
-            
-            
+
             self.dayCollectionView.collectionViewLayout.invalidateLayout()
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: .allowAnimatedContent, animations: {
@@ -108,9 +105,6 @@ class CalendarViewController: UIViewController {
             
         case .down:
 
-//            contentViewTopAnchor?.constant = 50
-//            collectionViewBottomAnchor?.constant = 0
-//            self.dayCollectionView.reloadData()
             self.dayCollectionView.collectionViewLayout.invalidateLayout()
             
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
@@ -149,8 +143,8 @@ class CalendarViewController: UIViewController {
     }
     
     // MARK: - Views
-    let monthView: UIView = {
-        let view = UIView()
+    let monthView: MonthView = {
+        let view = MonthView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
@@ -184,7 +178,8 @@ class CalendarViewController: UIViewController {
 // MARK: - UICollectionView DataSource
 extension CalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7 * 6
+        
+        return 7 * endWeekOfMonth
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -214,7 +209,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.dayCollectionView.frame.width / 7
-        let height = self.dayCollectionView.frame.height / 6
+        let height = self.dayCollectionView.frame.height / CGFloat(endWeekOfMonth)
         return  .init(width: width, height: height)
     }
 
@@ -232,19 +227,16 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
+// MARK: MonthView Delegate
 extension CalendarViewController: MonthViewDelegate {
-    func didChangeMonth(monthIndex: Int, year: Int) {
-        
-        
-        
-        //for leap years, make february month of 29 days
-        // component로 구하면 굳이 따로 계산 안 해도 ?
-//        if monthIndex == 1 {
-//            if year % 4 == 0 {
-//                monthCount?.count = 29
-//            } else {
-//                numOfDaysInMonth[monthIndex] = 28
-//            }
-        }
-        
+    
+    func didTapPreviousMonth(_ date: Date) -> Date {
+        self.presentDate = date.getPreviousMonthDate
+        return self.presentDate
+    }
+    
+    func didTapNextMonth(_ date: Date) -> Date {
+        self.presentDate = date.getNextMonthDate
+        return self.presentDate
+    }
 }

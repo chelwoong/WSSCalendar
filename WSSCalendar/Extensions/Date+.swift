@@ -44,6 +44,10 @@ extension Date {
     var getPreviousMonthDate: Date {
        return Calendar.current.date(byAdding: .month, value: -1, to: self)!
     }
+    
+    var getNextMonthDate: Date {
+       return Calendar.current.date(byAdding: .month, value: 1, to: self)!
+    }
 
     var startDateOfPreviousMonth: Date {
        return getPreviousMonthDate.startDateOfMonth
