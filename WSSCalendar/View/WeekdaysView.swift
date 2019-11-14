@@ -10,13 +10,14 @@ import UIKit
 
 class WeekdaysView: UIStackView {
     
-    let dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
+    let dayOfWeekKr = ["일", "월", "화", "수", "목", "금", "토"]
+    let dayOfWeekEng = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     let weekdaysStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        for day in dayOfWeek {
+        for day in dayOfWeekEng {
             let dayLabel = UILabel()
             dayLabel.text = day
             dayLabel.textAlignment = .center

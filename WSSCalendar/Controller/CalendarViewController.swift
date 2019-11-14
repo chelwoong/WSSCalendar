@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalendarViewController: UIViewController {
     
-    // MARK: - Variables and Properties
+    // MARK: - Properties
     var collectionViewBottomAnchor: NSLayoutConstraint?
     var contentViewTopAnchorConstraint: NSLayoutConstraint?
+    
     
     let dateCellId = "dateCellId"
 
@@ -181,28 +182,36 @@ class ViewController: UIViewController {
 }
 
 // MARK: - UICollectionView DataSource
-extension ViewController: UICollectionViewDataSource {
+extension CalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7 * 6
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: dateCellId, for: indexPath) as? DayCollectionViewCell else {return UICollectionViewCell()}
         
+        let firstWeekday = Calendar.current.component(.weekday, from: Date().startDateOfMonth)
+        let lastDayOfMonth = Calendar.current.range(of: .day, in: .month, for: Date())!.count
+        let presentDay = indexPath.item - firstWeekday + 2
+        
 //        cell.backgroundColor = .orange
-        cell.dayLabel.text = "\(indexPath.item)"
+        if presentDay > 0 && presentDay <= lastDayOfMonth {
+            cell.dayLabel.text = "\(presentDay)"
+        }
+        
         
         return cell
     }
 }
 
 // MARK: - UICollectionView Delegate
-extension ViewController: UICollectionViewDelegate {
+extension CalendarViewController: UICollectionViewDelegate {
     
 }
 
 // MARK: - UICollectionView Delegate FlowLayout
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.dayCollectionView.frame.width / 7
         let height = self.dayCollectionView.frame.height / 6
@@ -221,4 +230,21 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return 0
     }
     
+}
+
+extension CalendarViewController: MonthViewDelegate {
+    func didChangeMonth(monthIndex: Int, year: Int) {
+        
+        
+        
+        //for leap years, make february month of 29 days
+        // component로 구하면 굳이 따로 계산 안 해도 ?
+//        if monthIndex == 1 {
+//            if year % 4 == 0 {
+//                monthCount?.count = 29
+//            } else {
+//                numOfDaysInMonth[monthIndex] = 28
+//            }
+        }
+        
 }
