@@ -21,6 +21,7 @@ class WeekdaysView: UIStackView {
             let dayLabel = UILabel()
             dayLabel.text = day
             dayLabel.textAlignment = .center
+            
             self.addArrangedSubview(dayLabel)
             self.distribution = .fillEqually
             self.axis = .horizontal
